@@ -1,5 +1,7 @@
 FROM mcr.microsoft.com/devcontainers/miniconda:0-3
 
+RUN conda update conda
+
 RUN conda install -y python=3.8
 
 COPY environment.yml* .devcontainer/noop.txt /tmp/conda-tmp/
