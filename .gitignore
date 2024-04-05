@@ -1,1 +1,4 @@
 deployment_files/
+.vscode
+**/.__pycache__
+**/*.pyc
