@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', path='imageStyles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', path='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="button-container">
+            <a href="/" class="btn waves-effect waves-light">Analyze Another Image</a>
+        </div>
+        <div class="image-container">
+            <div class="section-title">Original image with detection</div>
+            <img src="data:image/png;base64,{{ base64_image }}" alt="Original Image with Detection">
+        </div>
+        <div class="image-container">
+            <div class="section-title">Image after 2x super resolution with detection</div>
+            <img src="data:image/png;base64,{{ base64_image }}" alt="2x Super Resolution with Detection">
+        </div>
+        <div class="image-container">
+            <div class="section-title">Image after 4x super resolution with detection</div>
+            <img src="data:image/png;base64,{{ base64_image }}" alt="4x Super Resolution with Detection">
+        </div>
+        <div class="button-container">
+            <a href="/" class="btn waves-effect waves-light">Analyze Another Image</a>
+        </div>
+    </div>
+</body>
+</html>

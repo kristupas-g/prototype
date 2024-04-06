@@ -91,6 +91,7 @@ dependencies:
   - pysocks=1.7.1=py38h06a4308_0
   - python=3.8.19=h955ad1f_0
   - python-dateutil=2.8.2=pyhd3eb1b0_0
+  - python-multipart=0.0.6=py38h06a4308_0
   - pyzmq=25.1.2=py38h6a678d5_0
   - readline=8.2=h5eee18b_0
   - reproc=14.2.4=h295c915_1

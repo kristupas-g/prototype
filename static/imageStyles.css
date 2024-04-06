@@ -1,0 +1,23 @@
+.container, .image-container, .button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+img {
+    width: 80%; /* Adjust based on preference */
+    margin: 20px 0;
+}
+.section-title {
+    font-size: 1.25rem;
+    color: #0D47A1;
+    margin: 20px 0 10px;
+}
+.button-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+a.btn {
+    width: auto; /* Allows the button to size according to its content */
+}
