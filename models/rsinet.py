@@ -21,9 +21,6 @@ class SuperResolver:
     def __preprocess_input(self, input):
         input = np.array(input).astype(np.float32)
         input = self.__ensure_bgr(input)
-
-        input = cv2.resize(input, (512, 512)) # This should be removed later
-
         input = input.transpose((2, 0, 1))
         input = np.expand_dims(input, axis = 0)
         return input
