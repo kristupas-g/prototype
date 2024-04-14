@@ -1,14 +1,24 @@
-import asyncio
 from fastapi import FastAPI, Request, File, UploadFile
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-
-from models.oriented_rcnn import Detector
-from models.rsinet import SuperResolver
-
+import asyncio
 from PIL import Image
 import io
+from base64 import b64encode
+import logging
+
+from onnx_optimizer import ONNXOptimizer
+from ship_detection import ShipDetector
+
+logging.basicConfig(
+    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+)
+
+OPTIMIZED = True
+
+if OPTIMIZED:
+    ONNXOptimizer.process_directory("/workspaces/prototype/deployment_files")
 
 app = FastAPI()
 
@@ -26,53 +36,31 @@ async def process_image(request: Request, image: UploadFile = File(...)):
     image = await image.read()
     image = Image.open(io.BytesIO(image))
 
-    original, double_scale, quad_scale = await asyncio.gather(
-        process_image(image),
-        process_image(image, sr_scale=2),
-        process_image(image, sr_scale=4),
+    original_scale_image, double_scale_image, quad_scale_image = await asyncio.gather(
+        handle_image(image, sr_scale=1),
+        handle_image(image, sr_scale=2),
+        handle_image(image, sr_scale=4),
     )
 
     return templates.TemplateResponse(
         name="image.html",
         context={
             "request": request,
-            "original_image": original,
-            "2x_image": double_scale,
-            "4x_image": quad_scale,
+            "original_scale_image": original_scale_image,
+            "double_scale_image": double_scale_image,
+            "quad_scale_image": quad_scale_image,
         },
     )
 
 
-async def process_image(image, sr_scale=0):
-    image = image.copy()
+async def handle_image(image, sr_scale):
+    result = ShipDetector.run(image, sr_scale=sr_scale)
 
-    if sr_scale > 0:
-        image = resolve_image(image, sr_scale)
+    result_io = io.BytesIO()
+    result.save(result_io, format="PNG")
+    result_io.seek(0)
+    result_io = result_io.getvalue()
 
-    detector = build_detector()
-    bboxes, classes = detector.run(image)
-    img_with_results = detector.visualize_results(image, bboxes, classes)
+    b64_result = b64encode(result_io).decode("utf-8")
 
-    img_io = io.BytesIO()
-    img_with_results.save(img_io, format="PNG")
-    img_io.seek(0)
-    return img_io.getvalue()
-
-
-def build_detector():
-    return Detector(model_path="/workspaces/prototype/deployment_files/oriented_rcnn")
-
-
-def build_super_resolver(scale):
-    if scale == 2:
-        return SuperResolver(
-            model_path="/workspaces/prototype/deployment_files/sr/2x.onnx"
-        )
-    elif scale == 4:
-        return SuperResolver(
-            model_path="/workspaces/prototype/deployment_files/sr/4x.onnx"
-        )
-    
-def resolve_image(image, scale):
-    super_resolver = build_super_resolver(scale)
-    return super_resolver.run(image)
+    return f"data:image/png;base64,{b64_result}"

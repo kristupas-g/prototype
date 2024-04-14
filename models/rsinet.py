@@ -1,6 +1,5 @@
 import onnxruntime as ort
 import numpy as np
-import torch
 import cv2
 
 class SuperResolver:
@@ -14,6 +13,7 @@ class SuperResolver:
         input = self.__preprocess_input(img)
 
         inputs = { self.ort_session.get_inputs()[0].name: input }
+        print(f"Running model with input shape {input.shape}")
         output = self.ort_session.run(None, inputs)[0]
 
         return self.__preprocess_output(output)

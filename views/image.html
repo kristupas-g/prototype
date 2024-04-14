@@ -13,15 +13,15 @@
         </div>
         <div class="image-container">
             <div class="section-title">Original image with detection</div>
-            <img src="data:image/png;base64,{{ base64_image }}" alt="Original Image with Detection">
+            <img src="{{ original_scale_image }}" alt="Original Image with Detection">
         </div>
         <div class="image-container">
             <div class="section-title">Image after 2x super resolution with detection</div>
-            <img src="data:image/png;base64,{{ base64_image }}" alt="2x Super Resolution with Detection">
+            <img src="{{ double_scale_image }}" alt="2x Super Resolution with Detection">
         </div>
         <div class="image-container">
             <div class="section-title">Image after 4x super resolution with detection</div>
-            <img src="data:image/png;base64,{{ base64_image }}" alt="4x Super Resolution with Detection">
+            <img src="{{ quad_scale_image }}" alt="4x Super Resolution with Detection">
         </div>
         <div class="button-container">
             <a href="/" class="btn waves-effect waves-light">Analyze Another Image</a>
