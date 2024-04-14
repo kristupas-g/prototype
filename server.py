@@ -18,7 +18,7 @@ logging.basicConfig(
 OPTIMIZED = True
 
 if OPTIMIZED:
-    ONNXOptimizer.process_directory("/workspaces/prototype/deployment_files")
+    ONNXOptimizer.optimize("/workspaces/prototype/deployment_files")
 
 app = FastAPI()
 
@@ -54,7 +54,7 @@ async def process_image(request: Request, image: UploadFile = File(...)):
 
 
 async def handle_image(image, sr_scale):
-    result = ShipDetector.run(image, sr_scale=sr_scale)
+    result = ShipDetector.run(image, sr_scale=sr_scale, optimized=OPTIMIZED)
 
     result_io = io.BytesIO()
     result.save(result_io, format="PNG")
