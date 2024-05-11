@@ -4,12 +4,18 @@ import logging
 from models.oriented_rcnn import Detector
 from models.rsinet import SuperResolver
 
+import numpy as np
+from PIL import Image
+
 class ShipDetector:
     def __init__(self, image, sr_scale=1, optimized=False):
         self.onnx_file_subdir = "/workspaces/prototype/deployment_files_optimized" if optimized else "/workspaces/prototype/deployment_files"
         self.logger = logging.getLogger(__name__)
         self.detector = self.__build_detector()
+
         self.image = image.copy()
+        self.image = image.convert("RGB")
+
         self.scale = sr_scale
 
     @classmethod
@@ -39,7 +45,7 @@ class ShipDetector:
         return resolved_image
 
     def __build_detector(self):
-        return Detector(model_path=f"{self.onnx_file_subdir}/oriented_rcnn")
+        return Detector(model_path=f"{self.onnx_file_subdir}/2x_75_onnx")
 
     def __perform_detection(self, image):
         start_time = time.time()

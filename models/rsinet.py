@@ -23,6 +23,7 @@ class SuperResolver:
         input = self.__ensure_bgr(input)
         input = input.transpose((2, 0, 1))
         input = np.expand_dims(input, axis = 0)
+        input = input.astype(np.float16)
         return input
 
     def __preprocess_output(self, output):

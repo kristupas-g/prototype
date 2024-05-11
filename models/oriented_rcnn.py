@@ -11,8 +11,14 @@ class Detector:
         self.device = device
 
         self.classes = {
-            4: {'name': 'Class 4', 'color': 'blue'},
-            5: {'name': 'Class 5', 'color': 'green'}
+            0: {'name': 'Motorinė valtis', 'color': 'red'},
+            1: {'name': 'Žvejybinė valtis', 'color': 'blue'},
+            2: {'name': 'Keleivinis laivas', 'color': 'green'},
+            3: {'name': 'Vilkikas', 'color': 'cyan'},
+            4: {'name': 'Skystų krovinių laivas', 'color': 'magenta'},
+            5: {'name': 'Sausakrūvis laivas', 'color': 'yellow'},
+            6: {'name': 'Inžinerinis laivas', 'color': 'orange'},
+            7: {'name': 'Karinis laivas', 'color': 'pink'}
         }
 
         self.detector = RotatedDetector(
@@ -24,7 +30,7 @@ class Detector:
     def run(self, img):
         return self.detector(img)
 
-    def visualize_results(self, image, bboxes, labels, score_threshold=0.5, thickness=2):
+    def visualize_results(self, image, bboxes, labels, score_threshold=0.3, thickness=1):
         fig, ax = plt.subplots()
         ax.imshow(image)
 

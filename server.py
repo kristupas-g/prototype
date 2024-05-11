@@ -15,7 +15,8 @@ logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
 )
 
-OPTIMIZED = True
+OPTIMIZED = False
+# OPTIMIZED = True
 
 if OPTIMIZED:
     ONNXOptimizer.optimize("/workspaces/prototype/deployment_files")

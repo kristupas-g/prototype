@@ -12,15 +12,16 @@
             <a href="/" class="btn waves-effect waves-light">Analyze Another Image</a>
         </div>
         <div class="image-container">
-            <div class="section-title">Original image with detection</div>
+            <div class="section-title">Original image with detected ships</div>
             <img src="{{ original_scale_image }}" alt="Original Image with Detection">
+            <img src="{{ url_for('static', path='legend.png') }}" style="" alt="Legend">
         </div>
         <div class="image-container">
-            <div class="section-title">Image after 2x super resolution with detection</div>
+            <div class="section-title">Image after 2x super resolution with detected ship</div>
             <img src="{{ double_scale_image }}" alt="2x Super Resolution with Detection">
         </div>
         <div class="image-container">
-            <div class="section-title">Image after 4x super resolution with detection</div>
+            <div class="section-title">Image after 4x super resolution with detected ships</div>
             <img src="{{ quad_scale_image }}" alt="4x Super Resolution with Detection">
         </div>
         <div class="button-container">
